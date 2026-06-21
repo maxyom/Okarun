@@ -27,6 +27,10 @@ export default {
     try {
       if (message.author.bot || !message.guild) return;
 
+      if (message.content.startsWith("!")) return;
+      
+      await message.reply(`Tu m'as dit : ${message.content}`);
+
       logger.debug(`Message received from ${message.author.tag}: ${message.content}`);
 
       const countingProcessed = await handleCountingGame(message, client);
