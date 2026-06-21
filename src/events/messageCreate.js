@@ -29,7 +29,9 @@ export default {
 
       if (message.content.startsWith("!")) return;
       
-      await message.reply(`Tu m'as dit : ${message.content}`);
+      if (message.mentions.has(client.user)) {
+    await message.reply(`Tu m'as dit : ${message.content}`);
+}
 
       logger.debug(`Message received from ${message.author.tag}: ${message.content}`);
 
