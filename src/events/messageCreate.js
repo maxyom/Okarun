@@ -1,4 +1,5 @@
 import { Events } from 'discord.js';
+import axios from 'axios';
 import { logger } from '../utils/logger.js';
 import { getLevelingConfig, getUserLevelData } from '../services/leveling.js';
 import { addXp } from '../services/xpSystem.js';
@@ -30,7 +31,26 @@ export default {
       if (message.content.startsWith("!")) return;
       
       if (message.mentions.has(client.user)) {
-    await message.reply("Bonjour !");
+    const response = await axios.post(
+  "https://api.openai.com/v1/chat/completions",
+  {
+    model: "gpt-4o-mini",
+    messages: [
+      {
+        role: "user",
+        content: message.content
+      }
+    ]
+  },
+  {
+    headers: {
+      "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
+      "Content-Type": "application/json"
+    }
+  }
+);
+
+await message.reply(response.data.choices[0].message.content);
 }
 
       logger.debug(`Message received from ${message.author.tag}: ${message.content}`);
