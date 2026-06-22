@@ -64,7 +64,8 @@ await message.reply(response.data.choices[0].message.content);
 
       await handleLeveling(message, client);
     } catch (error) {
-      logger.error('Error in messageCreate event:', error);
+      console.error(error);
+logger.error('Error in messageCreate event:', error);
     }
   }
 };
